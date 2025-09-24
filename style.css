@@ -29,6 +29,25 @@ header p {
   opacity: 0.9;
 }
 
+/* Subscribe Button */
+.subscribe-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: #ff0000;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.subscribe-btn:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
