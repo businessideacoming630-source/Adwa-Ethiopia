@@ -10,14 +10,20 @@ function shuffle(array) {
   return array;
 }
 
-// Load videos from links.json
-fetch("links.json")
-  .then(response => response.json())
-  .then(data => {
-    const videoSection = document.getElementById("videos");
-    const shuffled = shuffle(data.videos);
+// Function to display 3 random videos with fade effect
+function displayVideos(videos) {
+  const videoSection = document.getElementById("videos");
 
-    // Pick the first 3 videos after shuffle
+  // Fade out
+  videoSection.classList.remove("fade-in");
+  videoSection.classList.add("fade-out");
+
+  setTimeout(() => {
+    // Clear old videos
+    videoSection.innerHTML = "";
+
+    // Pick new 3 random videos
+    const shuffled = shuffle([...videos]);
     const sampleVideos = shuffled.slice(0, 3);
 
     sampleVideos.forEach(video => {
@@ -27,5 +33,23 @@ fetch("links.json")
       iframe.allowFullscreen = true;
       videoSection.appendChild(iframe);
     });
+
+    // Fade in
+    videoSection.classList.remove("fade-out");
+    videoSection.classList.add("fade-in");
+  }, 2000); // wait for fade-out before swapping
+}
+
+// Fetch videos once and start cycle
+fetch("links.json")
+  .then(response => response.json())
+  .then(data => {
+    // Initial load
+    displayVideos(data.videos);
+
+    // Refresh every 60s
+    setInterval(() => {
+      displayVideos(data.videos);
+    }, 60000);
   })
   .catch(error => console.error("Error loading videos:", error));
